@@ -9,6 +9,9 @@ import PasswordForgetPage from './PasswordForget';
 import HomePage from './Home';
 import AccountPage from './Account';
 
+import auth from '../auth';
+import fire from '../fire';
+
 import * as routes from '../constants/routes';
 
 import './App.css';

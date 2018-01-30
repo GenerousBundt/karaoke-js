@@ -1,4 +1,6 @@
 import firebase from 'firebase'
+
+
 var config = {
     apiKey: "AIzaSyDl5Iahc0gfcdJ_OycFw3cFnPA6vK2GGDI",
     authDomain: "karaoke-6876e.firebaseapp.com",
@@ -7,5 +9,13 @@ var config = {
     storageBucket: "karaoke-6876e.appspot.com",
     messagingSenderId: "603772681466"
   };
-var fire = firebase.initializeApp(config);
-export default fire;
+
+if (!firebase.apps.length) {
+	firebase.initializeApp(config);
+}
+
+const fire = firebase.auth();
+
+export {
+	fire,
+}
