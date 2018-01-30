@@ -8,7 +8,7 @@ export const createUserWithEmailAndPassword = (email, password) =>
 export const signInWithEmailAndPassword = (email, password) =>
 	fire.signInWithEmailAndPassword(email, password);
 
-export const signOut = () =>
+export const doSignOut = () =>
 	fire.signOut();
 
 // Password Reset
