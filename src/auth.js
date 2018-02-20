@@ -1,20 +1,20 @@
-import { fire }from './fire';
+import { auth } from './fire';
 
 // Sign Up
 export const createUserWithEmailAndPassword = (email, password) =>
-	fire.createUserWithEmailAndPassword(email, password);
+	auth.createUserWithEmailAndPassword(email, password);
 
 // Sign In
 export const signInWithEmailAndPassword = (email, password) =>
-	fire.signInWithEmailAndPassword(email, password);
+	auth.signInWithEmailAndPassword(email, password);
 
 export const doSignOut = () =>
-	fire.signOut();
+	auth.signOut();
 
 // Password Reset
 export const doPasswordReset = (email) =>
-  fire.sendPasswordResetEmail(email);
+  auth.sendPasswordResetEmail(email);
 
 // Password Change
 export const doPasswordUpdate = (password) =>
-  fire.currentUser.updatePassword(password);
+  auth.currentUser.updatePassword(password);

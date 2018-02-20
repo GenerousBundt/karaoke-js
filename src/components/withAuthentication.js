@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fire } from '../fire';
+import { auth } from '../fire';
 
 const withAuthentication = (Component) => {
 	class WithAuthentication extends React.Component {
@@ -19,7 +19,7 @@ const withAuthentication = (Component) => {
     }
 
     componentDidMount() {
-      fire.onAuthStateChanged(authUser => {
+      auth.onAuthStateChanged(authUser => {
         authUser
           ? this.setState(() => ({ authUser }))
           : this.setState(() => ({ authUser: null }));

@@ -14,8 +14,9 @@ if (!firebase.apps.length) {
 	firebase.initializeApp(config);
 }
 
-const fire = firebase.auth();
+const auth = firebase.auth();
 
 export {
-	fire,
+	firebase,
+	auth,
 }

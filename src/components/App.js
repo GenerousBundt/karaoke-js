@@ -4,6 +4,8 @@ import {
   Route,
 } from 'react-router-dom';
 
+import Cookies from 'universal-cookie';
+
 import Navigation from './Navigation';
 import LandingPage from './Landing';
 import SignUpPage from './SignUp';
@@ -15,6 +17,14 @@ import AccountPage from './Account';
 import * as routes from '../constants/routes';
 
 import withAuthentication from './withAuthentication';
+
+const userIsAdmin = () => {
+  var cookies = new Cookies();
+  if(cookies.get('authCookie') === 'Authenticated')
+    return true;
+  else
+    return false;
+};
 
 const App = () =>
   <Router>
