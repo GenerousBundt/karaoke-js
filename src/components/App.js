@@ -13,10 +13,11 @@ import SignInPage from './SignIn';
 import PasswordForgetPage from './PasswordForget';
 import HomePage from './Home';
 import AccountPage from './Account';
+import AddSongPage from './AddSong';
 
 import * as routes from '../constants/routes';
 
-import withAuthentication from './withAuthentication';
+import withUserAuthedAndLoaded from './withUserAuthedAndLoaded';
 
 const userIsAdmin = () => {
   var cookies = new Cookies();
@@ -39,7 +40,9 @@ const App = () =>
       <Route exact path={routes.PASSWORD_FORGET} component={() => <PasswordForgetPage />} />
       <Route exact path={routes.HOME} component={() => <HomePage />} />
       <Route exact path={routes.ACCOUNT} component={() => <AccountPage />} />
+
+      <Route exact path={routes.ADD_SONG} component={() => <AddSongPage />} />
     </div>
   </Router>
 
-export default withAuthentication(App);
+export default withUserAuthedAndLoaded(App);

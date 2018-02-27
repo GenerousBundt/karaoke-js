@@ -3,7 +3,8 @@ import { Link, withRouter, } from 'react-router-dom';
 import * as routes from '../constants/routes';
 import * as auth from '../auth'
 
-import * as userUtils from '../utils/user';
+import User from '../models/user';
+import * as userService from '../services/user';
 
 const SignUpPage = ({ history }) =>
   <div>
@@ -43,7 +44,7 @@ class SignUpForm extends Component {
 
 	    auth.createUserWithEmailAndPassword(email, passwordOne)
 	      .then(authUser => {
-	      	userUtils.createNewUser(authUser);
+	      	userService.createNewUser(new User(authUser));
 	        this.setState(() => ({ ...INITIAL_STATE }));
 	        history.push(routes.HOME);
 	      })
