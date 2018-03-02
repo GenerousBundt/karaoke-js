@@ -27,7 +27,6 @@ const withUserAuthedAndLoaded = (Component) => {
     componentDidMount() {
       const db = firebase.database();
       this.setAuthUserAndLoadUserInfo = (authUser) => {
-        console.log('authUser', authUser);
         // const testUser = userService.getUserByEmail(authUser.email);
 
         db.ref('users').orderByChild('email').equalTo(authUser.email).on('value', (snapshot) => {

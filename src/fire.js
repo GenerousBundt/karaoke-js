@@ -1,22 +1,29 @@
 import firebase from 'firebase'
+import "firebase/firestore";
+import { FIREBASE_CONFIG, TEST_FIREBASE_CONFIG } from "./config/config";
 
 
-var config = {
-    apiKey: "AIzaSyDl5Iahc0gfcdJ_OycFw3cFnPA6vK2GGDI",
-    authDomain: "karaoke-6876e.firebaseapp.com",
-    databaseURL: "https://karaoke-6876e.firebaseio.com",
-    projectId: "karaoke-6876e",
-    storageBucket: "karaoke-6876e.appspot.com",
-    messagingSenderId: "603772681466"
-  };
+// choose which firebase account to use
+const testing = false;
 
-if (!firebase.apps.length) {
-	firebase.initializeApp(config);
+if (testing) {
+  const app = firebase.initializeApp(TEST_FIREBASE_CONFIG);
+  firebase.firestore(app);
+} else {
+  const app = firebase.initializeApp(FIREBASE_CONFIG);
+  firebase.firestore(app);
 }
+
+// if (!firebase.apps.length) {
+// 	firebase.initializeApp(config);
+// }
+
+const db = firebase.firestore();
 
 const auth = firebase.auth();
 
 export {
 	firebase,
-	auth,
+  auth,
+  db,
 }
