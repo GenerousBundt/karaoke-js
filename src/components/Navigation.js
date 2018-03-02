@@ -32,9 +32,6 @@ const NavigationNonAuth = () => (
       <Link to={routes.LANDING}>Landing</Link>
     </li>
     <li>
-      <Link to={routes.ADD_SONG}>Add Song</Link>
-    </li>
-    <li>
       <Link to={routes.SIGN_IN}>Sign In</Link>
     </li>
   </ul>

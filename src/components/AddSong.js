@@ -34,15 +34,16 @@ class AddSongPage extends Component {
 	}
 
 	writeSongToFirebase() {
-		console.log("SESSIONS", this.props.session);
-		const sessionSongs = this.props.songs;
-		const newSong = { title: this.state.songName, url: this.state.songUrl, stageName: this.state.songName }
+		let sessionSongs = this.props.session.songs;
+		const newSong = { title: this.state.songName, url: this.state.songUrl, stageName: this.state.stageName };
 		sessionSongs.push(newSong);
 
+		console.log("SONGZ", sessionSongs);
+
 		db
-      .collection("session")
-      .doc(this.props.session.id)
-      .set({ songs: sessionSongs })
+      .collection("sessions")
+      .doc('u0dIh0357M5R15Jr2MhZ')
+      .update({ songs: sessionSongs })
       .then(function() {
         console.log("Document successfully written!");
       })
