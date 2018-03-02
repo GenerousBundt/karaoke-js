@@ -27,7 +27,7 @@ class LandingPage extends Component {
         <h1>{this.state.session.title}</h1>
 
         {this.state.session.songs && this.state.session.songs.map((song, index) => (
-          <Song song={song} />
+          <Song song={song} key={index} />
         ))}
       </div>;
   }
