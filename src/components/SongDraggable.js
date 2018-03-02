@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
-import * as SongUtils from '../utils/songUtils';
-import '../App.css';
 import { TiDelete } from 'react-icons/lib/ti';
-import { MdScreenShare } from 'react-icons/lib/md'
+import { MdScreenShare } from 'react-icons/lib/md';
 var React = require('react');
 
 
@@ -14,7 +12,7 @@ class SongDraggable extends React.Component{
     render(){
         const {item, itemSelected, dragHandle} = this.props;
         var cn = "list-group-item";
-        const handleDelete = () => {SongUtils.deleteSongFromSession(item.id)};
+        const handleDelete = () => {console.log('Nice TRY. But nothing got deleted')};
         const handleLaunch = () => {window.open(`${item.url}`, '_blank');}
         return (
             <div>
