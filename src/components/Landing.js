@@ -12,20 +12,20 @@ class LandingPage extends Component {
   componentWillMount() {
     db
       .collection("sessions")
+      .orderBy("date")
       .limit(1)
       .onSnapshot(snap => {
-        console.log("HEYREIRUHE", snap);
         snap.forEach(session => {
-          this.setState({ session });
+          this.setState({ session: session.data() });
         });
       });
   }
 
   render() {
     return <div>
-        <h1>Landing Page</h1>
+        <h1>{this.state.session.title}</h1>
 
-        <p>Hey {this.state.session.title}!</p>
+        <p>Put some songs here</p>
       </div>;
   }
 }
