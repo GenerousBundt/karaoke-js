@@ -2,59 +2,53 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import * as userService from '../services/user';
+import { db } from '../fire';
 
-const AddSongPage = (props, { authUser, user }) =>
-  <div>
-    <h1>Account: {authUser.email}</h1>
-    <SongUrlForm userEmail={authUser.email} user={user}/>
-  </div>
-
-const INITIAL_STATE = {
-	songName: '',
-	songUrl: '',
-};
-
-class SongUrlForm extends Component {
-		constructor(props) {
+class AddSongPage extends Component {
+	constructor(props) {
 		super(props);
 
-		this.state = { ...INITIAL_STATE };
+		this.state = { 
+			songName: '', 
+			songUrl: '',
+			stageName: '',
+			order: 99999, 
+		};
+
+		this.writeSongToFirebase = this.writeSongToFirebase.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
 	}
 
-	onSubmit = (event) => {
+	onSubmit(event) {
+			event.preventDefault();
+			
 	    const {
 	      songName,
-	      songUrl,
+				songUrl,
+				stageName,
+				order,
 	    } = this.state;
 
-	    // const {
-	    // 	history,
-	    // } = this.props;
-
-	    console.log('SUBMITTED!', songName, songUrl);
-
-	    event.preventDefault();
+			console.log('SUBMITTED!', songName, songUrl);
+			this.writeSongToFirebase();
 	}
 
-	onTestSubmit = (event) => {
-		event.preventDefault();
-		console.log('USER', this.props.user);
-		// .then((response) => {
-		// 	test = response.val();
-		// 	console.log('TEST', test);
-		// 	console.log('KEY', test.key);
-		// });
-		
-		// .then((results) => {
-		// 	results.forEach(result => {
-		// 		result.forEach(childResult => {
-		// 			console.log('TEST USER GET', childResult);
-		// 		})
-		// 	});
-			
-		// });
-		
+	writeSongToFirebase() {
+		console.log("SESSIONS", this.props.session);
+		const sessionSongs = this.props.songs;
+		const newSong = { title: this.state.songName, url: this.state.songUrl, stageName: this.state.songName }
+		sessionSongs.push(newSong);
 
+		db
+      .collection("session")
+      .doc(this.props.session.id)
+      .set({ songs: sessionSongs })
+      .then(function() {
+        console.log("Document successfully written!");
+      })
+      .catch(function(error) {
+        console.error("Error writing document: ", error);
+      });
 	}
 
 	render() {
@@ -62,47 +56,37 @@ class SongUrlForm extends Component {
 		const {
 			songName,
 			songUrl,
+			stageName,
 		} = this.state;
 
 		const isInvalid =
 			songName === '' ||
-			songUrl === '';
+			songUrl === '' ||
+			stageName === '';
 
-		return (
-			<div>
-			<form onSubmit={this.onSubmit}>
-	        <input
-	          value={songName}
-	          onChange={event => this.setState({ songName: event.target.value })}
-	          type="text"
-	          placeholder="Song Name"
-	        />
-	        <input
-	          value={songUrl}
-	          onChange={event => this.setState({ songUrl: event.target.value })}
-	          type="text"
-	          placeholder="Song Url"
-	        />
-	        <button disabled={isInvalid} type="submit">
-	          Submit Song
-	        </button>
-
-	      </form>
-	      <form onSubmit={this.onTestSubmit}>
-	      	<button  type="submit">
-	          Test Button
-	        </button>
-	      </form>
-	      </div>
-	      )
+		return <div>
+        <form onSubmit={this.onSubmit}>
+          <input value={stageName} onChange={event => this.setState({
+                stageName: event.target.value
+              })} type="text" placeholder="Stage Name" />
+          <input value={songName} onChange={event => this.setState({
+                songName: event.target.value
+              })} type="text" placeholder="Song Title" />
+          <input value={songUrl} onChange={event => this.setState({
+                songUrl: event.target.value
+              })} type="text" placeholder="Song Url" />
+          <button disabled={isInvalid} type="submit">
+            Submit Song
+          </button>
+        </form>
+      </div>;
 
 	}
 	
 }
 
-AddSongPage.contextTypes = {
-  authUser: PropTypes.object,
-  user: PropTypes.object,
-};
+// AddSongPage.propTypes = {
+//   session: PropTypes.object
+// };
 
 export default AddSongPage;

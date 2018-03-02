@@ -3,12 +3,14 @@ import { db } from '../fire';
 import Song from './Song';
 import SongDraggable from './SongDraggable'
 import DraggableList from 'react-draggable-list'
+import AddSong from './AddSong';
 
 class LandingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       session: {},
+      loading: true,
     };
   }
 
@@ -19,7 +21,7 @@ class LandingPage extends Component {
       .limit(1)
       .onSnapshot(snap => {
         snap.forEach(session => {
-          this.setState({ session: session.data() });
+          this.setState({ session: session.data(), loading: false });
         });
       });
 
@@ -36,27 +38,38 @@ class LandingPage extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <h1>{this.state.session.title}</h1>
+    if(this.state.loading) {
+      return (
+        <p>Loading...</p>
+      )
+    } else {
 
-        {
-          this.props.authUser && 
-          <DraggableList 
-            list={this.state.session.songs} 
-            template={SongDraggable} 
-            itemKey="title" 
-            onMoveEnd={newList => this.onListChange(newList)} 
-          />
-        }
-        {
-          !this.props.authUser && this.state.session.songs.map((song, index) => (
-              <Song song={song} key={index} />
-          ))
-        }
-        
-      </div>
-    )
+      return (
+        <div>
+          <h1>{this.state.session.title}</h1>
+
+          {!this.state.loading && <div className="addSong">
+              <AddSong session={this.state.session} />
+            </div>}
+
+          {
+            this.props.authUser && 
+            <DraggableList 
+              list={this.state.session.songs} 
+              template={SongDraggable} 
+              itemKey="title" 
+              onMoveEnd={newList => this.onListChange(newList)} 
+            />
+          }
+          {
+            !this.props.authUser && this.state.session.songs.map((song, index) => (
+                <Song song={song} key={index} />
+            ))
+          }
+          
+        </div>
+      )
+    }
   }
 }
 

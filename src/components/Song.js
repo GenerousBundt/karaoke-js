@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-var React = require('react');
+import React, { Component } from 'react';
 
 
-class Song extends React.Component{
+class Song extends Component{
     constructor(props){
         super(props);
     }
