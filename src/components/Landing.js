@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { db } from '../fire';
+import Song from './Song';
 
 class LandingPage extends Component {
   constructor(props) {
@@ -25,7 +26,9 @@ class LandingPage extends Component {
     return <div>
         <h1>{this.state.session.title}</h1>
 
-        <p>Put some songs here</p>
+        {this.state.session.songs && this.state.session.songs.map((song, index) => (
+          <Song song={song} />
+        ))}
       </div>;
   }
 }
